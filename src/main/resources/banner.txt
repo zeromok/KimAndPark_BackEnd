@@ -1,0 +1,5 @@
+
+${AnsiColor.BLUE} Welcome !
+${AnsiColor.BRIGHT_YELLOW} ${application.title} ${application.version}
+${AnsiColor.BRIGHT_WHITE} Powered by ${AnsiColor.BRIGHT_GREEN} Spring Boot ${spring-boot.version}
+${AnsiColor.BRIGHT_WHITE}
