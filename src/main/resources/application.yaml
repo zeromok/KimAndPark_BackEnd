@@ -1,0 +1,4 @@
+
+spring:
+  application:
+    name: KimAndPark_BackEnd.v0.1
