@@ -24,7 +24,6 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class UserDetailService implements UserDetailsService {
-
 	UserRepository userRepository;
 
 	@Override
