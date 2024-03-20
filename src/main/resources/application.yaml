@@ -3,3 +3,14 @@
 spring:
   application:
     name: KimAndPark_BackEnd.v0.1
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:test
+
+# actuator value 설정 (값이 보일지 말지?)
+management:
+  endpoint:
+    env:
+      show-values: when_authorized
