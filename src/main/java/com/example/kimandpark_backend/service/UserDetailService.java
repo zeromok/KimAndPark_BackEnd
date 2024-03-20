@@ -5,6 +5,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.example.kimandpark_backend.Repository.UserRepository;
+
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -23,9 +25,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserDetailService implements UserDetailsService {
 
+	UserRepository userRepository;
+
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return null;
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		return userRepository.findByEmail(email)
+			.orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다."));
 	}
 
 } // end class

@@ -1,6 +1,12 @@
 
 # * default env
 spring:
+  jpa:
+    show-sql: true
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        format_sql: true
   application:
     name: KimAndPark_BackEnd.v0.1
   h2:
