@@ -3,7 +3,14 @@
 # 애플리케이션이 시작될 때 기본적으로 적용되는 설정
 spring:
   profiles:
-    default: common, dev
+    default: dev
+    group:
+      dev:
+        - common
+        - dev
+      prod:
+        - common
+        - prod
 
 ---
 # * common env
