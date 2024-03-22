@@ -1,14 +1,12 @@
 package com.example.kimandpark_backend.config;
 
-import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.*;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -36,19 +34,14 @@ public class SecurityConfig {
 	private final UserDetailService userService;
 
 	@Bean
-	public WebSecurityCustomizer webSecurityCustomizer(){
-		return (web) -> web.ignoring() // 시큐리티의 인증, 인가 모든 곳에 적용하지 않음
-			.requestMatchers(toH2Console()) // H2 DB 관련
-			.requestMatchers("/static/**"); // 정적메서드
-	}
-
-	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
-			.csrf(AbstractHttpConfigurer::disable)
+			.headers(header -> header.frameOptions(
+				HeadersConfigurer.FrameOptionsConfig::disable)) // 프레임 옵션 비활성화 For H2 console
+			.csrf(AbstractHttpConfigurer::disable) // CSRF 보호 비활성화 For H2 console
 			.authorizeHttpRequests(request -> {
 				request
-					.requestMatchers("/login", "/").permitAll()
+					.requestMatchers("/login", "/", "/static/**", "/h2-console/**").permitAll()
 					.anyRequest().authenticated();
 			})
 			.formLogin(login ->
