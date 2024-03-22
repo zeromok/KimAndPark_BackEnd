@@ -1,7 +1,33 @@
 
 # * default env
-
+# 애플리케이션이 시작될 때 기본적으로 적용되는 설정
 spring:
+  profiles:
+    default: common, dev
+
+---
+# * common env
+# common 프로파일이 활성화될 때 적용될 설정 정의
+spring:
+  config:
+    activate:
+      on-profile: common
+
+# actuator value 설정 (값이 보일지 말지?)
+management:
+  endpoint:
+    env:
+      show-values: when_authorized
+
+
+---
+# * dev env
+# dev  프로파일이 활성화될 때 적용될 설정 정의
+spring:
+  config:
+    activate:
+      on-profile: dev
+
   jpa:
     show-sql: true
     defer-datasource-initialization: true
@@ -16,8 +42,10 @@ spring:
   datasource:
     url: jdbc:h2:mem:test
 
-# actuator value 설정 (값이 보일지 말지?)
-management:
-  endpoint:
-    env:
-      show-values: when_authorized
+---
+# * prod env
+# prod  프로파일이 활성화될 때 적용될 설정 정의
+spring:
+  config:
+    activate:
+      on-profile: prod
