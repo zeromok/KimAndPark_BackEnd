@@ -41,6 +41,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    open-in-view: false # 기본적으로 true - 이 설정은 뷰 렌더링 중에 DB쿼리를 수행할 수 있도록 허용합니다. 그걸 막아줬음
   application:
     name: KimAndPark_BackEnd.v0.1
   h2:
