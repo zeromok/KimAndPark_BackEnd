@@ -18,12 +18,12 @@ import lombok.Data;
 @AllArgsConstructor
 public class ResponseDTO {
 
+	private boolean success;
 	private String message;
-	private String code;
 	private Object data;
 
-	public static ResponseDTO body(String message, String code, Object data) {
-		return new ResponseDTO(message, code, data);
+	public static ResponseDTO body(boolean success, String message, Object data) {
+		return new ResponseDTO(success, message, data);
 	}
 
 } // end class

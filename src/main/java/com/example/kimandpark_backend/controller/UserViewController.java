@@ -20,19 +20,13 @@ import com.example.kimandpark_backend.dto.ResponseDTO;
  * 2024-03-21(021)                Park Byeong-mok             최초 생성
  */
 @RestController
-@RequestMapping("/")
+@RequestMapping("/users")
 public class UserViewController {
 
-	@GetMapping("/admin")
-	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<Object> admin() {
-		return ResponseEntity.ok(ResponseDTO.body("성공", "200", "관리자 입니다."));
-	}
-
-	@GetMapping("/user")
+	@GetMapping()
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<Object> user() {
-		return ResponseEntity.ok(ResponseDTO.body("성공", "200", "유저 입니다."));
+		return ResponseEntity.ok(ResponseDTO.body(true, "안농하세오?유저에오!", ""));
 	}
 
 } // end class

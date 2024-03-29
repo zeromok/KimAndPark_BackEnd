@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.example.kimandpark_backend.dto.ResponseDTO;
 import com.example.kimandpark_backend.service.UserDetailService;
 
 import lombok.RequiredArgsConstructor;
@@ -43,13 +44,14 @@ public class SecurityConfig {
 				request
 					.requestMatchers("/login", "/", "/static/**", "/h2-console/**").permitAll()
 					.requestMatchers("/admin/**").hasRole("ADMIN")
-					.requestMatchers("/user/**").hasRole("USER")
+					.requestMatchers("/users/**").hasRole("USER")
 					.anyRequest().authenticated();
 			})
 			.formLogin(login ->
 				login
 					.loginPage("/login")
 					.successHandler(new CustomAuthenticationSuccessHandler())
+					.failureHandler(new CustomAuthenticationFailureHandler())
 			)
 			.logout(logout ->
 				logout
@@ -62,7 +64,8 @@ public class SecurityConfig {
 		return httpSecurity.build();
 	}
 
-	private AuthenticationProvider daoAuthenticationProvider() {
+	@Bean
+	public AuthenticationProvider daoAuthenticationProvider() {
 		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
 
 		daoAuthenticationProvider.setUserDetailsService(userService);
@@ -72,7 +75,9 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public PasswordEncoder bCryptPasswordEncoder() {
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		System.out.println(encoder.encode("1234"));
 		return new BCryptPasswordEncoder();
 	}
 
