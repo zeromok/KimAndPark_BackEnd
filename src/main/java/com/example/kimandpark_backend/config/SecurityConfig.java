@@ -42,12 +42,14 @@ public class SecurityConfig {
 			.authorizeHttpRequests(request -> {
 				request
 					.requestMatchers("/login", "/", "/static/**", "/h2-console/**").permitAll()
+					.requestMatchers("/admin/**").hasRole("ADMIN")
+					.requestMatchers("/user/**").hasRole("USER")
 					.anyRequest().authenticated();
 			})
 			.formLogin(login ->
 				login
 					.loginPage("/login")
-					.defaultSuccessUrl("/")
+					.successHandler(new CustomAuthenticationSuccessHandler())
 			)
 			.logout(logout ->
 				logout
@@ -69,7 +71,8 @@ public class SecurityConfig {
 		return daoAuthenticationProvider;
 	}
 
-	private PasswordEncoder bCryptPasswordEncoder() {
+	@Bean
+	public PasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
