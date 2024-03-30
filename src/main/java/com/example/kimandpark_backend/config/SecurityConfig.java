@@ -3,6 +3,7 @@ package com.example.kimandpark_backend.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -58,21 +59,26 @@ public class SecurityConfig {
 					.logoutUrl("/logout")
 					.logoutSuccessUrl("/login")
 					.invalidateHttpSession(true)
-			)
-			.authenticationProvider(daoAuthenticationProvider());
+			);
+			// .authenticationProvider(daoAuthenticationProvider());
 
 		return httpSecurity.build();
 	}
 
-	@Bean
-	public AuthenticationProvider daoAuthenticationProvider() {
-		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-
-		daoAuthenticationProvider.setUserDetailsService(userService);
-		daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
-
-		return daoAuthenticationProvider;
-	}
+	/**
+	 * UserDetailsService 와 PasswordEncoder 가 빈 으로 등록되어 있어서
+	 * Spring Security 가 등록된 위 빈 들을 자동으로 감지하고 DefaultAuthenticationProvider 인 daoAuthenticationProvider() 를 자동 구성 합니다.
+	 * 사용자 인증 과정에서 추가적인 검증 로직을 적용하거나, 다른 UserDetailsService 구현을 사용하려는 경우에 필요할 수 있습니다.
+	 * */
+	// @Bean
+	// public AuthenticationProvider daoAuthenticationProvider() {
+	// 	DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+	//
+	// 	daoAuthenticationProvider.setUserDetailsService(userService);
+	// 	daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
+	//
+	// 	return daoAuthenticationProvider;
+	// }
 
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
