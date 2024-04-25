@@ -15,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -49,6 +50,13 @@ public class User implements UserDetails {
 
 	@Enumerated(EnumType.STRING)
 	private Role role;
+
+	@Builder
+	public User(String email, String password) {
+		this.email = email;
+		this.password = password;
+		this.role = Role.ROLE_USER;
+	}
 
 	public enum Role {
 		ROLE_ADMIN, ROLE_USER
