@@ -1,5 +1,8 @@
 package com.example.kimandpark_backend.service;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +25,13 @@ public class UserService {
 			.build()).getSeq();
 	}
 
-
+	public String findPw(String email) {
+		try {
+			Optional<User> user = userRepository.findByEmail(email);
+			System.out.println(user);
+			return userRepository.findByEmail(email).get().getPassword();
+		} catch (NoSuchElementException e) {
+			return "false";
+		}
+	}
 } // end class
