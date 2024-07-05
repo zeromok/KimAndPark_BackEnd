@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.kimandpark_backend.dto.ResponseDTO;
 
-
 @RestController
 @RequestMapping("/admin")
 public class AdminViewController {

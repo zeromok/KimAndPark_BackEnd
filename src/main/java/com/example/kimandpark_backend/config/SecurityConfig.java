@@ -39,7 +39,7 @@ public class SecurityConfig {
 			.csrf(AbstractHttpConfigurer::disable) // CSRF 보호 비활성화 For H2 console
 			.authorizeHttpRequests(request -> {
 				request
-					.requestMatchers("/login", "/", "/static/**", "/h2-console/**", "/signup").permitAll()
+					.requestMatchers("/login", "/", "/static/**", "/h2-console/**", "/signup", "/find-pw").permitAll()
 					.requestMatchers("/admin/**").hasRole("ADMIN")
 					.requestMatchers("/users/**").hasRole("USER")
 					.anyRequest().authenticated();

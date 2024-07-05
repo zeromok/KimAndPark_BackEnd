@@ -1,7 +1,6 @@
 package com.example.kimandpark_backend.domain;
 
 import java.util.Collection;
-import java.util.TreeMap;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -70,6 +69,10 @@ public class User implements UserDetails {
 	@Override
 	public String getPassword() {
 		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override

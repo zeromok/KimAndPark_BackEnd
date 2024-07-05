@@ -1,10 +1,10 @@
 package com.example.kimandpark_backend.service;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.kimandpark_backend.Repository.UserRepository;
 import com.example.kimandpark_backend.domain.User;
@@ -25,13 +25,20 @@ public class UserService {
 			.build()).getSeq();
 	}
 
-	public String findPw(String email) {
-		try {
-			Optional<User> user = userRepository.findByEmail(email);
-			System.out.println(user);
-			return userRepository.findByEmail(email).get().getPassword();
-		} catch (NoSuchElementException e) {
-			return "false";
+	public Optional<User> findByEmail(String email) {
+		return userRepository.findByEmail(email).isPresent() ?
+			userRepository.findByEmail(email) : Optional.empty();
+	}
+
+	@Transactional
+	public boolean deleteByEmail(String email) {
+		Optional<User> userOptional = userRepository.findByEmail(email);
+		if (userOptional.isPresent()) {
+			userRepository.deleteByEmail(email);
+			return true;
+		} else {
+			return false;
 		}
 	}
+
 } // end class
